@@ -13,6 +13,7 @@ import logger from '../utils/logger.js';
 const connection = {
   host: env.REDIS_HOST,
   port: env.REDIS_PORT,
+  ...(env.REDIS_PASSWORD && { password: env.REDIS_PASSWORD }),
   maxRetriesPerRequest: 1,
   enableOfflineQueue: false,
 };
