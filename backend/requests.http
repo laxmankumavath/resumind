@@ -1,0 +1,134 @@
+@baseUrl = http://localhost:5000/api/v1
+@email = demo@example.com
+@password = password123
+
+### Health check
+GET {{baseUrl}}/health
+
+### Register user
+# @name register
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "Demo User",
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+### Login user
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+### Refresh access token
+POST {{baseUrl}}/auth/refresh-token
+Content-Type: application/json
+
+{
+  "refreshToken": "{{login.response.body.$.data.tokens.refreshToken}}"
+}
+
+### Get profile
+GET {{baseUrl}}/user/profile
+Authorization: Bearer {{login.response.body.$.data.tokens.accessToken}}
+
+### Update profile
+PUT {{baseUrl}}/user/profile
+Authorization: Bearer {{login.response.body.$.data.tokens.accessToken}}
+Content-Type: application/json
+
+{
+  "name": "Updated Demo User"
+}
+
+### Upload resume
+# Put a real PDF/DOCX path below before sending.
+# @name uploadResume
+POST {{baseUrl}}/resumes/upload
+Authorization: Bearer {{login.response.body.$.data.tokens.accessToken}}
+Content-Type: multipart/form-data; boundary=ResumeBoundary
+
+--ResumeBoundary
+Content-Disposition: form-data; name="resume"; filename="resume.docx"
+Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+< ./samples/resume.docx
+--ResumeBoundary--
+
+### List resumes
+GET {{baseUrl}}/resumes
+Authorization: Bearer {{login.response.body.$.data.tokens.accessToken}}
+
+### Get resume by id
+GET {{baseUrl}}/resumes/{{uploadResume.response.body.$.data._id}}
+Authorization: Bearer {{login.response.body.$.data.tokens.accessToken}}
+
+### Analyze resume
+# @name analyzeResume
+POST {{baseUrl}}/analysis/analyze
+Authorization: Bearer {{login.response.body.$.data.tokens.accessToken}}
+Content-Type: application/json
+
+{
+  "resumeId": "{{uploadResume.response.body.$.data._id}}",
+  "jobTitle": "Backend Developer",
+  "jobDescriptionText": "We need a backend developer with Node.js, Express, MongoDB, REST API, authentication, cloud storage, and queue processing experience."
+}
+
+### Compare resume with job description
+POST {{baseUrl}}/analysis/compare-jd
+Authorization: Bearer {{login.response.body.$.data.tokens.accessToken}}
+Content-Type: application/json
+
+{
+  "resumeId": "{{uploadResume.response.body.$.data._id}}",
+  "jobTitle": "Backend Developer",
+  "jobDescriptionText": "We need a backend developer with Node.js, Express, MongoDB, REST API, authentication, cloud storage, and queue processing experience."
+}
+
+### Get analysis
+GET {{baseUrl}}/analysis/{{analyzeResume.response.body.$.data.analysisId}}
+Authorization: Bearer {{login.response.body.$.data.tokens.accessToken}}
+
+### Rewrite full resume
+POST {{baseUrl}}/rewrite/resume
+Authorization: Bearer {{login.response.body.$.data.tokens.accessToken}}
+Content-Type: application/json
+
+{
+  "resumeId": "{{uploadResume.response.body.$.data._id}}",
+  "targetRole": "Backend Developer"
+}
+
+### Rewrite one section
+POST {{baseUrl}}/rewrite/section
+Authorization: Bearer {{login.response.body.$.data.tokens.accessToken}}
+Content-Type: application/json
+
+{
+  "resumeId": "{{uploadResume.response.body.$.data._id}}",
+  "sectionName": "experience",
+  "text": "Built APIs using Node.js and MongoDB."
+}
+
+### Get rewrite history
+GET {{baseUrl}}/rewrite/history/{{uploadResume.response.body.$.data._id}}
+Authorization: Bearer {{login.response.body.$.data.tokens.accessToken}}
+
+### Export PDF
+GET {{baseUrl}}/export/pdf/{{uploadResume.response.body.$.data._id}}
+Authorization: Bearer {{login.response.body.$.data.tokens.accessToken}}
+
+### Export DOCX
+GET {{baseUrl}}/export/docx/{{uploadResume.response.body.$.data._id}}
+Authorization: Bearer {{login.response.body.$.data.tokens.accessToken}}
+
+### Logout
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{login.response.body.$.data.tokens.accessToken}}
