@@ -85,7 +85,7 @@ export const startRewriteWorker = () => {
     throw error;
   }
   }, { 
-    connection: { host: env.REDIS_HOST, port: env.REDIS_PORT, maxRetriesPerRequest: null },
+    connection: { host: env.REDIS_HOST, port: env.REDIS_PORT, ...(env.REDIS_PASSWORD && { password: env.REDIS_PASSWORD }), maxRetriesPerRequest: null },
     concurrency: 5
   });
 
