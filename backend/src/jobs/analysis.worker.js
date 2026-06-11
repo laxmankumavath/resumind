@@ -65,7 +65,7 @@ export const startAnalysisWorker = () => {
     throw error; // Let BullMQ handle retries if configured
   }
   }, { 
-    connection: { host: env.REDIS_HOST, port: env.REDIS_PORT, maxRetriesPerRequest: null } 
+    connection: { host: env.REDIS_HOST, port: env.REDIS_PORT, ...(env.REDIS_PASSWORD && { password: env.REDIS_PASSWORD }), maxRetriesPerRequest: null } 
   });
 
   analysisWorker.on('completed', (job) => {
