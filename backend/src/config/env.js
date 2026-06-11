@@ -17,6 +17,9 @@ if (process.env.REDIS_URL && (!process.env.REDIS_HOST || !process.env.REDIS_PORT
     const redisUrl = new URL(process.env.REDIS_URL);
     process.env.REDIS_HOST ||= redisUrl.hostname;
     process.env.REDIS_PORT ||= redisUrl.port || '6379';
+    if (redisUrl.password) {
+      process.env.REDIS_PASSWORD ||= redisUrl.password;
+    }
   } catch (_error) {
     // Validation below will report usable Redis settings.
   }
@@ -36,6 +39,7 @@ const envSchema = z.object({
   REDIS_URL: z.string().default(''),
   REDIS_HOST: z.string().default('127.0.0.1'),
   REDIS_PORT: z.string().transform(Number).default('6379'),
+  REDIS_PASSWORD: z.string().default(''),
   
   JWT_SECRET: z.string().default(''),
   JWT_ACCESS_SECRET: z.string().min(10),
