@@ -12,7 +12,8 @@ export const redisClient = createClient({
     host: env.REDIS_HOST,
     port: env.REDIS_PORT,
     reconnectStrategy: false
-  }
+  },
+  ...(env.REDIS_PASSWORD && { password: env.REDIS_PASSWORD })
 });
 
 redisClient.on('error', (err) => console.log('Redis client error', err));
