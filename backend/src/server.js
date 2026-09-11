@@ -9,17 +9,25 @@ import logger from './utils/logger.js';
 /**
  * Application Entry Point
  * 
- * Why it exists: Starts the application and manages infrastructure connections.
- * What it does: Connects to MongoDB, Redis, starts background workers, and listens for HTTP requests.
- * Reloaded with updated environment configurations.
+ * Why it exists: Starts the HTTP server and manages infrastructure connections.
+ * What it does: Immediately binds port for cloud hosting (Render/Vercel) and connects to MongoDB/Redis.
  */
 
 const startServer = async () => {
   try {
-    // 1. Connect to Infrastructure
-    await connectDB();
-    const redisConnected = await connectRedis();
+    // 1. Start Express Server immediately so cloud hosting providers detect the open port
+    const PORT = process.env.PORT || env.PORT || 5000;
+    const server = app.listen(PORT, () => {
+      logger.info(`Server running in ${env.NODE_ENV} mode on port ${PORT}`);
+    });
 
+    // 2. Connect to Infrastructure
+    const dbConnected = await connectDB();
+    if (!dbConnected && env.NODE_ENV === 'production') {
+      logger.warn('Server is running, but database connection could not be established. Please verify MONGO_URI.');
+    }
+
+    const redisConnected = await connectRedis();
     if (redisConnected) {
       try {
         startAnalysisWorker();
@@ -28,22 +36,16 @@ const startServer = async () => {
       } catch (workerErr) {
         logger.warn(`Could not start workers with server: ${workerErr.message}`);
       }
+    } else {
+      logger.warn('Redis is not connected. Background worker queues will be offline.');
     }
 
-    // 2. Start Express Server
-    const PORT = env.PORT || 5000;
-    const server = app.listen(PORT, () => {
-      logger.info(`Server running in ${env.NODE_ENV} mode on port ${PORT}`);
-    });
-
-    // Handle Unhandled Rejections (e.g., Database connection failure after startup)
+    // Handle Unhandled Rejections
     process.on('unhandledRejection', (err) => {
       logger.error(`Unhandled Rejection: ${err.message}`);
-      // Close server & exit process
-      server.close(() => process.exit(1));
     });
 
-    // Handle graceful shutdown (Ctrl+C)
+    // Handle graceful shutdown (Ctrl+C / SIGTERM)
     process.on('SIGTERM', () => {
       logger.info('SIGTERM received. Shutting down gracefully...');
       server.close(() => {
