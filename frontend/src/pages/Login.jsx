@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { Mail, Lock, Eye, EyeOff, Sparkles, ArrowRight, Loader2 } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ArrowRight, Loader2 } from 'lucide-react';
 import { login } from '../api/auth.api';
 import useAuthStore from '../store/authStore';
 
@@ -32,9 +32,6 @@ const Login = () => {
   return (
     <div className="w-full">
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-indigo-50 text-brand-indigo mb-3 shadow-sm border border-indigo-100">
-          <Sparkles className="w-6 h-6 text-brand-indigo" />
-        </div>
         <h2 className="text-2xl font-bold tracking-tight text-slate-900">Sign in to ResuMind</h2>
         <p className="text-sm text-slate-500 mt-1">
           Access your resumes, ATS analytics, and AI rewriting tools
