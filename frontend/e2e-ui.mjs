@@ -246,7 +246,7 @@ const run = async () => {
     await waitForText(send, 'ATS Analysis Results', 20000, consoleErrors);
 
     await evaluate(send, clickByText('Fix with AI Rewrite'));
-    await waitForText(send, 'Transform Your Resume with Gemini AI', undefined, consoleErrors);
+    await waitForText(send, 'Transform Your Resume with AI', undefined, consoleErrors);
     await evaluate(send, clickByText('Rewrite Full Resume'));
     await waitForText(send, 'Rewrite Complete!', 45000, consoleErrors);
     await waitForText(send, 'Export PDF', undefined, consoleErrors);

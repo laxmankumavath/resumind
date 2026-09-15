@@ -261,8 +261,7 @@ const Rewrite = () => {
       {/* Header & Resume Selector Bar */}
       <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
-            <Sparkles className="h-6 w-6 text-brand-indigo" />
+          <h2 className="text-2xl font-extrabold text-slate-900">
             AI Resume Rewriter
           </h2>
           <p className="mt-1 text-sm text-slate-500">
@@ -295,12 +294,8 @@ const Rewrite = () => {
       {/* Main Rewrite View */}
       {!rewriteStarted && !isJobCompleted && (
         <div className="bg-white rounded-2xl p-8 sm:p-12 shadow-sm border border-slate-200 text-center max-w-3xl mx-auto">
-          <div className="mx-auto w-16 h-16 rounded-2xl bg-brand-indigo/10 flex items-center justify-center text-brand-indigo mb-6">
-            <Wand2 className="h-8 w-8" />
-          </div>
-          
           <h3 className="text-3xl font-extrabold text-slate-900 mb-3">
-            Transform Your Resume with Gemini AI
+            Transform Your Resume with AI
           </h3>
           <p className="text-slate-600 mb-8 max-w-xl mx-auto leading-relaxed">
             Our AI analyzes your experience, upgrades weak action verbs, integrates crucial keywords truthfully, and formats every section to maximize ATS passing rates.
