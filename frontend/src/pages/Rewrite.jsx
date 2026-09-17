@@ -9,7 +9,6 @@ import {
   Copy,
   Check,
   FileText,
-  Sparkles,
   ArrowRight,
   TrendingUp,
   Briefcase,
@@ -324,7 +323,7 @@ const Rewrite = () => {
               onClick={onStartRewrite}
               className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 border border-transparent shadow-sm text-base font-semibold rounded-xl text-white bg-brand-indigo hover:bg-brand-purple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-indigo transition-all transform active:scale-95"
             >
-              <Sparkles className="mr-2 h-5 w-5" />
+              <Wand2 className="mr-2 h-5 w-5" />
               Rewrite Full Resume
             </button>
             <Link
@@ -342,7 +341,7 @@ const Rewrite = () => {
         <div className="bg-white rounded-2xl p-12 shadow-sm border border-slate-200 text-center max-w-3xl mx-auto my-8">
           <div className="relative mx-auto w-20 h-20 mb-6">
             <RefreshCcw className="animate-spin h-20 w-20 text-brand-indigo" />
-            <Sparkles className="absolute inset-0 m-auto h-8 w-8 text-brand-purple animate-pulse" />
+            <Wand2 className="absolute inset-0 m-auto h-8 w-8 text-brand-purple animate-pulse" />
           </div>
           <h3 className="text-2xl font-bold text-slate-900">AI is Rewriting Your Resume</h3>
           <p className="text-slate-500 mt-2 max-w-md mx-auto text-sm">
@@ -445,7 +444,7 @@ const Rewrite = () => {
 
                   <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex items-center gap-4">
                     <div className="p-3 bg-indigo-50 text-brand-indigo rounded-xl">
-                      <Sparkles className="h-6 w-6" />
+                      <TrendingUp className="h-6 w-6" />
                     </div>
                     <div>
                       <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Estimated Boost</p>
@@ -488,7 +487,7 @@ const Rewrite = () => {
                   {keywordsAdded.length > 0 && (
                     <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                       <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <Sparkles className="h-4 w-4 text-brand-indigo" />
+                        <Wand2 className="h-4 w-4 text-brand-indigo" />
                         Truthful Keywords Added
                       </h4>
                       <div className="flex flex-wrap gap-2">

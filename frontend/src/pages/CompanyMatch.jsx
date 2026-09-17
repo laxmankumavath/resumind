@@ -10,7 +10,6 @@ import {
   Loader2,
   RefreshCcw,
   Search,
-  Sparkles,
   Target,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -359,7 +358,7 @@ const CompanyMatch = () => {
           disabled={isGenerating || resumes.length === 0}
           className="inline-flex items-center justify-center rounded-md bg-brand-indigo px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-purple disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {isGenerating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+          {isGenerating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Building2 className="mr-2 h-4 w-4" />}
           Generate Match
         </button>
       </div>
